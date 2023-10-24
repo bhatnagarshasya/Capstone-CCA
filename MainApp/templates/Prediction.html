@@ -1,0 +1,86 @@
+{% extends 'Base.html' %}
+
+{% block body %}
+
+<p>Hello World, this is Prediction Page</p>
+
+<H3>Things to be Done in this page:</H3>
+<ul>
+    <li>Machine Learning Techniques to be used</li>
+    <li>Choosing Machine Learning Techniques</li>
+    <li>Choosing a particular attribute</li>
+    <li>Accuracy of that Attribute</li>
+</ul>
+    
+
+<!-- Accordion Elements -->
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <!-- Accordion Item 1: Choosing Machine Learning Technique -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Choosing Machine Learning Technique
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            {% for Columns in ChoosingOutputFields %}
+            <a href="/ChoosingOutputFields/{{Columns}}"><button class="btn btn-outline-success mb-3">{{Columns}}</button></a>
+            {% endfor %}
+            {{OutputFields}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion Item 2: Choosing Machine Learning Technique -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Choosing Machine Learning Technique
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            {% for Algo in MLAlgoList %}
+            <a href="/ChoosingMLAlgorithm/{{Algo}}"><button class="btn btn-outline-success mb-3">{{Algo}}</button></a>
+            {% endfor %}
+            {{MLAlgo}}
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion Item 2: Choosing a particular attribute -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Choosing a particular attribute
+          </button>
+        </h2>
+        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+              {% for Attributes in ListOfAttribute %}
+              <a href="/ChoosingAttribute/{{Attributes}}"><button class="btn btn-outline-success mb-3">{{Attributes}}</button></a>
+              {% endfor %}
+              {{Attribute}}
+          </div>
+        </div>
+      </div>
+
+    <!-- Accordion Item 4: Accuracy of that Attribute -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+            Descriptive Data
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <a href="/showData/2"><button class="btn btn-outline-success mb-3">Accuracy of that Attribute</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!--End of Accordion Elements  -->
+  </div> 
+  
+{% endblock body %}

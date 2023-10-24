@@ -1,0 +1,85 @@
+{% extends 'Base.html' %}
+
+{% block body %}
+
+
+<!-- Accordion Elements -->
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <!-- Accordion Item 1: Uploading of Excel Sheets -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+            Uploading of Excel Sheets
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            <h1>Upload Excel File (.xlsx)</h1>
+            <form action="/preparation/1" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" id="file">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion Item 2: Choosing Output Field -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+            Choosing Output Field
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            {% for Columns in ChoosingOutputFields %}
+            <a href="/ChoosingOutputFields/{{Columns}}"><button class="btn btn-outline-success mb-3">{{Columns}}</button></a>
+            {% endfor %}
+            {{OutputFields}}
+        </div>
+      </div>
+    </div>
+    
+    <!-- Accordion Item 3: Show Data -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+            Show Data
+        </button>
+      </h2>
+      <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">
+            <a href="/showData/1"><button class="btn btn-outline-success mb-3">Show Data</button></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Accordion Item 4: Descriptive Data -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseThree">
+            Descriptive Data
+          </button>
+        </h2>
+        <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                <a href="/showData/2"><button class="btn btn-outline-success mb-3">Show Descriptive Data</button></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accordion Item 5: Dividing data into fields -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseThree">
+            Dividing data into fields
+          </button>
+        </h2>
+        <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">{{DividingDataFields}}</div>
+        </div>
+    </div>
+
+    <!--End of Accordion Elements  -->
+  </div> 
+{% endblock body %}
