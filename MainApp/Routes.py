@@ -43,6 +43,7 @@ def HomePage():
 def Preparation():
     try:
         df = pd.read_excel('ChurnAnalysis.xlsx')
+        print("Dataframe Read")
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:
         session['ChoosingOutputFields'] = 'Empty'
@@ -56,7 +57,9 @@ def prepOption(Option):
             if file:
                 file.save("ChurnAnalysis.xlsx")
                 session['ShowData'] = 1
+                print("File Uploaded")
                 return redirect("/preparation")
+                
     
 
     return f'{Option} : {Option == "1"}'
