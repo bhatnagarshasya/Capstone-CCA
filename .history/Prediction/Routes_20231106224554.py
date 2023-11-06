@@ -21,8 +21,6 @@ def VarDefinition():
 @app.route("/")
 def HomePage():
     session['MLTechniques'] = VarDefinition()
-    if 'ML_Technique' not in session:
-        session['ML_Technique'] = 'Not Selected yet'
     if 'OutputFields' not in session:
         session['OutputFields'] = 'Not Selected yet'
     if 'MLOutput' not in session:
@@ -39,7 +37,7 @@ def Preparation():
     except:
         session['ChoosingOutputFields'] = 'Empty'
     print(session['MLOutput'])
-    return render_template('MLTrainer.html', MLTechniques=session['MLTechniques'], ML_Technique=session['ML_Technique'], MLOutput=session['MLOutput'], OutputFields=session['OutputFields'])
+    return render_template('MLTrainer.html', MLTechniques=session['MLTechniques'], OutputFields=session['OutputFields'], MLOutput=session['MLOutput'])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
@@ -62,7 +60,7 @@ def Prediction(MLTechnique):
     # Prepare the dataframe for the API call
     df_json = df.to_json(orient='records')
 
-    session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['ML_Technique']}/{df_json}").json()
+    session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['OutputFields']}/{df_json}").json()
     return redirect("/mlTrainer")
 
 
@@ -98,13 +96,8 @@ def showTable(Option):
 ## ChoosingOutputFields
 @app.route("/MLTechniques/<Option>")
 def MLTechniques(Option):
-    session['ML_Technique'] = Option
-    return redirect('/mlTrainer')
-## Choosing Output Fields
-@app.route("/ChoosingOutputFields/<Option>")
-def ChoosingOutputFields(Option):
     session['OutputFields'] = Option
-    return redirect('/preparation')
+    return redirect('/mlTrainer')
 
 
 ## Train Data on Models
