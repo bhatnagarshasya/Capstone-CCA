@@ -4,8 +4,6 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.svm import SVC
 from sklearn.inspection import permutation_importance
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
 import numpy as np
 
 
@@ -71,27 +69,6 @@ def MLApplier(MLALGO):
             # Step 5: Associate feature importances with feature names
             feature_importance_dict = dict(zip(X.columns, feature_importances))
             print(feature_importance_dict)
-        elif MLALGO == "Linear Regression":
-            # Step 3: Create and train a Linear Regression model
-            linear_regression = LinearRegression()
-            linear_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = linear_regression.coef_
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-
-        elif MLALGO == "Logistic Regression":
-            # Step 3: Create and train a Logistic Regression model
-            logistic_regression = LogisticRegression()
-            logistic_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = logistic_regression.coef_[0]
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
         else:
             feature_importance_dict = {"MLAlgo Selected": "Under Development"}
 

@@ -2,108 +2,13 @@ from flask import Flask, render_template, request, session, redirect
 import requests
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVC
-from sklearn.inspection import permutation_importance
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
-import numpy as np
 
 
 app = Flask(__name__)
 app.secret_key = "Hello World"
 
-### Feature Importance Calculator function for SVM
-def permutation_importance_score(estimator, X, y):
-    score = permutation_importance(estimator, X, y, scoring='accuracy')
-    return score.mean(axis=1)
-
-#### Function for handling Non-numerical Data
-def handle_non_numerical_data(df):
-    columns = df.columns.values
-    for column in columns:
-        text_digit_vals = {}
-        def convert_to_int(val):
-            return text_digit_vals[val]
-
-        if df[column].dtype != np.int64 and df[column].dtype != np.float64:
-            column_contents = df[column].values.tolist()
-            unique_elements = set(column_contents)
-            x = 0
-            for unique in unique_elements:
-                if unique not in text_digit_vals:
-                    text_digit_vals[unique] = x
-                    x+=1
-
-            df[column] = list(map(convert_to_int, df[column]))
-
-    return df
-
-### Function for Implementing Random Forest Algorithm
-def MLApplier(MLALGO):
-    try:
-        #Step1 To read Dataframe 
-        df = handle_non_numerical_data(pd.read_excel('ChurnAnalysis.xlsx'))
-        print(df.head())
-
-
-        # Step 2: Split the data into features and target
-        X = df.drop(session['OutputFields'], axis=1)  # Features
-        y = df[session['OutputFields']]  # Target
-
-        if MLALGO == "Random Forest":
-            # Step 3: Create and train a Random Forest Regressor
-            random_forest = RandomForestRegressor()
-            random_forest.fit(X, y)
-
-            # Step 4: Get feature importances
-            feature_importances = random_forest.feature_importances_
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-        elif MLALGO == "SVM":
-            # Step 3: Create and train an SVM classifier
-            svm = SVC()
-            svm.fit(X, y)
-
-            # Step 4: Get feature importances using the coefficients
-            feature_importances = permutation_importance_score(svm, X, y)
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-            print(feature_importance_dict)
-        elif MLALGO == "Linear Regression":
-            # Step 3: Create and train a Linear Regression model
-            linear_regression = LinearRegression()
-            linear_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = linear_regression.coef_
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-
-        elif MLALGO == "Logistic Regression":
-            # Step 3: Create and train a Logistic Regression model
-            logistic_regression = LogisticRegression()
-            logistic_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = logistic_regression.coef_[0]
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-        else:
-            feature_importance_dict = {"MLAlgo Selected": "Under Development"}
-
-        return feature_importance_dict
-    
-    except Exception as e:
-        return f"Caught an error Error: {str(e)}"
-
-
-
-
-
+def RandomForest():
+      
 
 ## Home Page
 @app.route("/")
@@ -190,8 +95,7 @@ def Prediction():
 ## Report
 @app.route("/report")
 def Report():
-    #print(RandomForest())
-    return render_template('Report.html', GeneratedWeights=MLApplier("Random Forest"))
+    return render_template('Report.html')
 
 ## Login
 @app.route("/login")
@@ -235,12 +139,6 @@ def ChoosingMLAlgorithm(Option):
 @app.route("/ChoosingAttribute/<Option>")
 def ChoosingAttribute(Option):
     session['Attribute'] = Option
-    return redirect('/prediction')
-
-## Prediction => Training Data on mentioned Machine Learning Models
-@app.route("/trainData/<MLAlgo>")
-def trainData(MLAlgo):
-    session['MLOutput'] = MLApplier(MLAlgo)
     return redirect('/prediction')
 
 if __name__ == '__main__':

@@ -1,0 +1,59 @@
+{% extends 'Base.html' %}
+
+{% block body %}
+
+<p>Hello World, this is Report Page</p>
+
+<H3>Things to be Done in this page:</H3>
+<ul>
+    <li>Weight Generation</li>
+</ul>
+
+<div class="container my-3">
+    <h2>Reports</h2>
+
+    {% if allReport|length == 0 %}
+
+    <div class="alert alert-dark" role="alert">
+        No Reports found. Add your first report now!
+    </div>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Attribute</th>
+                <th scope="col">Weights</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for report in viewTable %}
+            <tr>
+                <th scope="row">{{loop.index}}</th>
+                <td>{{report.customerName}}</td>
+                <td>{{report.accountNumber}}</td>
+                <td>{{report.search}}</td>
+                <td>{{report.bank}}</td>
+                <td>{{report.legalAmount}}</td>
+                <td>{{report.searchAmount}}</td>
+                <td>{{report.vettingAmount}}</td>
+                <td><a href = '{{report.report}}' >{{report.report}}</td>
+                <td>{{report.date_created}}</td>
+                <td>
+                    <a href="/update/{{report.sno}}" type="button"
+                        class="btn btn-outline-dark btn-sm mx-1">Update</button>
+                        <a href="/delete/{{report.sno}}" type="button"
+                            class="btn btn-outline-dark btn-sm mx-1">Delete</button>
+
+                </td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+
+</div>
+
+{% endblock body %}

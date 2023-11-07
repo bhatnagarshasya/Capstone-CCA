@@ -15,7 +15,7 @@
 
 <!-- Accordion Elements -->
 <div class="accordion accordion-flush" id="accordionFlushExample">
-    <!-- Accordion Item 1: Choosing Machine Learning Technique
+    <!-- Accordion Item 1: Choosing Machine Learning Technique -->
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -30,7 +30,7 @@
             {{OutputFields}}
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Accordion Item 2: Choosing Machine Learning Technique -->
     <div class="accordion-item">
@@ -53,7 +53,7 @@
     <div class="accordion-item">
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseTwo">
-            Choosing a particular attribute : {{Attribute}}
+            Choosing a particular attribute
           </button>
         </h2>
         <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -61,26 +61,10 @@
               {% for Attributes in ListOfAttribute %}
               <a href="/ChoosingAttribute/{{Attributes}}"><button class="btn btn-outline-success mb-3">{{Attributes}}</button></a>
               {% endfor %}
-              
+              {{Attribute}}
           </div>
         </div>
       </div>
-
-    <!-- Accordion Item 1: Choosing Machine Learning Technique -->
-    <div class="accordion-item">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-            Train Machine Learning Model on a Given Data
-        </button>
-      </h2>
-      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">
-          <a href="/trainData/{{MLAlgo}}"><button class="btn btn-outline-success mb-3">Train Model using {{MLAlgo}}</button></a>
-          <p>Attribute Selected: {{Attribute}}</p>
-          <p>Weight of {{Attribute}}: {{MLOutput[Attribute]}}</p>
-        </div>
-      </div>
-    </div>
 
     <!-- Accordion Item 4: Accuracy of that Attribute -->
     <div class="accordion-item">
@@ -92,7 +76,6 @@
         <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
                 <a href="/showData/2"><button class="btn btn-outline-success mb-3">Accuracy of that Attribute</button></a>
-
             </div>
         </div>
     </div>

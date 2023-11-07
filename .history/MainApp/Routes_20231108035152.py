@@ -2,20 +2,11 @@ from flask import Flask, render_template, request, session, redirect
 import requests
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVC
-from sklearn.inspection import permutation_importance
-from sklearn.linear_model import LinearRegression
-from sklearn.linear_model import LogisticRegression
 import numpy as np
 
 
 app = Flask(__name__)
 app.secret_key = "Hello World"
-
-### Feature Importance Calculator function for SVM
-def permutation_importance_score(estimator, X, y):
-    score = permutation_importance(estimator, X, y, scoring='accuracy')
-    return score.mean(axis=1)
 
 #### Function for handling Non-numerical Data
 def handle_non_numerical_data(df):
@@ -39,7 +30,7 @@ def handle_non_numerical_data(df):
     return df
 
 ### Function for Implementing Random Forest Algorithm
-def MLApplier(MLALGO):
+def RandomForest():
     try:
         #Step1 To read Dataframe 
         df = handle_non_numerical_data(pd.read_excel('ChurnAnalysis.xlsx'))
@@ -50,50 +41,15 @@ def MLApplier(MLALGO):
         X = df.drop(session['OutputFields'], axis=1)  # Features
         y = df[session['OutputFields']]  # Target
 
-        if MLALGO == "Random Forest":
-            # Step 3: Create and train a Random Forest Regressor
-            random_forest = RandomForestRegressor()
-            random_forest.fit(X, y)
+        # Step 3: Create and train a Random Forest Regressor
+        random_forest = RandomForestRegressor()
+        random_forest.fit(X, y)
 
-            # Step 4: Get feature importances
-            feature_importances = random_forest.feature_importances_
+        # Step 4: Get feature importances
+        feature_importances = random_forest.feature_importances_
 
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-        elif MLALGO == "SVM":
-            # Step 3: Create and train an SVM classifier
-            svm = SVC()
-            svm.fit(X, y)
-
-            # Step 4: Get feature importances using the coefficients
-            feature_importances = permutation_importance_score(svm, X, y)
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-            print(feature_importance_dict)
-        elif MLALGO == "Linear Regression":
-            # Step 3: Create and train a Linear Regression model
-            linear_regression = LinearRegression()
-            linear_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = linear_regression.coef_
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-
-        elif MLALGO == "Logistic Regression":
-            # Step 3: Create and train a Logistic Regression model
-            logistic_regression = LogisticRegression()
-            logistic_regression.fit(X, y)
-
-            # Step 4: Get feature importances using coefficients
-            feature_importances = logistic_regression.coef_[0]
-
-            # Step 5: Associate feature importances with feature names
-            feature_importance_dict = dict(zip(X.columns, feature_importances))
-        else:
-            feature_importance_dict = {"MLAlgo Selected": "Under Development"}
+        # Step 5: Associate feature importances with feature names
+        feature_importance_dict = dict(zip(X.columns, feature_importances))
 
         return feature_importance_dict
     
@@ -190,8 +146,8 @@ def Prediction():
 ## Report
 @app.route("/report")
 def Report():
-    #print(RandomForest())
-    return render_template('Report.html', GeneratedWeights=MLApplier("Random Forest"))
+    print(RandomForest())
+    return render_template('Report.html')
 
 ## Login
 @app.route("/login")
@@ -235,12 +191,6 @@ def ChoosingMLAlgorithm(Option):
 @app.route("/ChoosingAttribute/<Option>")
 def ChoosingAttribute(Option):
     session['Attribute'] = Option
-    return redirect('/prediction')
-
-## Prediction => Training Data on mentioned Machine Learning Models
-@app.route("/trainData/<MLAlgo>")
-def trainData(MLAlgo):
-    session['MLOutput'] = MLApplier(MLAlgo)
     return redirect('/prediction')
 
 if __name__ == '__main__':
