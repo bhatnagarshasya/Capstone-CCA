@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session, redirect, jsonify
-import jwt
 import requests
 import json
 import pandas as pd
@@ -10,7 +9,7 @@ app.secret_key = "Hello World"
 ## Definition of ML Algorithms
 def MLAlgo(MLTechnique, Data, targetColumn):
     if MLTechnique == "Random Forest":
-        return "Random Forest"
+        pass
     return len(Data)
 
 ## Defining all session variables
@@ -40,7 +39,7 @@ def Preparation():
     except:
         session['ChoosingOutputFields'] = 'Empty'
     print(session['MLOutput'])
-    return render_template('MLTrainer.html', MLTechniques=session['MLTechniques'], ML_Technique=session['ML_Technique'], MLOutput=session['MLOutput'], OutputFields=session['OutputFields'], ChoosingOutputFields=session['ChoosingOutputFields'])
+    return render_template('MLTrainer.html', MLTechniques=session['MLTechniques'], ML_Technique=session['ML_Technique'], MLOutput=session['MLOutput'], OutputFields=session['OutputFields'])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
@@ -62,17 +61,8 @@ def Prediction(MLTechnique):
     df = pd.read_excel('ChurnAnalysis.xlsx')
     # Prepare the dataframe for the API call
     df_json = df.to_json(orient='records')
-    Data = {
-        'Data' : "Hello World", #df_json,
-        'TargetColumn' :  session['OutputFields'],
-        'MLTechnique' : MLTechnique
-    }
-    header = {"tpy":"jwt", "alg":"HS256"}
-    secret = "secret"
-    token = jwt.encode(Data, secret, algorithm="HS256", headers=header)
-    print(token)
-    req = requests.get(f"http://127.0.0.1:8080/TrainData/{token}/{df_json}")
-    session['MLOutput'] = req.json()
+
+    session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['ML_Technique']}/{df_json}").json()
     return redirect("/mlTrainer")
 
 
@@ -114,21 +104,20 @@ def MLTechniques(Option):
 @app.route("/ChoosingOutputFields/<Option>")
 def ChoosingOutputFields(Option):
     session['OutputFields'] = Option
-    return redirect('/mlTrainer')
+    return redirect('/preparation')
 
 
 ## Train Data on Models
-@app.route("/TrainData/<Data>/<Dataframe>")
-def DataTrainer(Data, Dataframe):
-    Dictionary = jwt.decode(Data, "secret", algorithms=["HS256"])
+@app.route("/TrainData/<MLTechnique>/<Data>/<TargetColumn>")
+def DataTrainer(MLTechnique, Data, TargetColumn):
     data = {
-        'MLTechnique': "MLTechnique",
-        'Target Column': Dictionary['TargetColumn'],
-        #'Weights': [1, 2, 3, 4],
-        'Model Return': 'Testing'#MLAlgo(MLTechnique, Data, TargetColumn),
+        'MLTechnique': MLTechnique,
+        'Target Column': TargetColumn,
+        'Weights': [1, 2, 3, 4],
+        'Model Return': MLAlgo(MLTechnique, Data, TargetColumn),
     }
-    #print(Data, type(json.loads(Data)))
-    return jsonify(data)
+    print(type(json.dumps(data)))
+    return json.dumps(data)
 
 
 ## Train Data on Models

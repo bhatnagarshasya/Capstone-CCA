@@ -118,11 +118,11 @@ def ChoosingOutputFields(Option):
 
 
 ## Train Data on Models
-@app.route("/TrainData/<Data>/<Dataframe>")
-def DataTrainer(Data, Dataframe):
+@app.route("/TrainData/<MLTechnique>/<Data>/<Dataframe>")
+def DataTrainer(MLTechnique, Data, Dataframe):
     Dictionary = jwt.decode(Data, "secret", algorithms=["HS256"])
     data = {
-        'MLTechnique': "MLTechnique",
+        'MLTechnique': MLTechnique,
         'Target Column': Dictionary['TargetColumn'],
         #'Weights': [1, 2, 3, 4],
         'Model Return': 'Testing'#MLAlgo(MLTechnique, Data, TargetColumn),

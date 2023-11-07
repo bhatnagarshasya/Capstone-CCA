@@ -64,14 +64,13 @@ def Prediction(MLTechnique):
     df_json = df.to_json(orient='records')
     Data = {
         'Data' : "Hello World", #df_json,
-        'TargetColumn' :  session['OutputFields'],
-        'MLTechnique' : MLTechnique
+        'TargetColumn' :  session['OutputFields']
     }
     header = {"tpy":"jwt", "alg":"HS256"}
     secret = "secret"
     token = jwt.encode(Data, secret, algorithm="HS256", headers=header)
     print(token)
-    req = requests.get(f"http://127.0.0.1:8080/TrainData/{token}/{df_json}")
+    req = requests.get(f"http://127.0.0.1:8080/TrainData/{MLTechnique}/{token}/{df_json}")
     session['MLOutput'] = req.json()
     return redirect("/mlTrainer")
 
@@ -118,11 +117,11 @@ def ChoosingOutputFields(Option):
 
 
 ## Train Data on Models
-@app.route("/TrainData/<Data>/<Dataframe>")
-def DataTrainer(Data, Dataframe):
+@app.route("/TrainData/<MLTechnique>/<Data>/<Dataframe>")
+def DataTrainer(MLTechnique, Data, Dataframe):
     Dictionary = jwt.decode(Data, "secret", algorithms=["HS256"])
     data = {
-        'MLTechnique': "MLTechnique",
+        'MLTechnique': MLTechnique,
         'Target Column': Dictionary['TargetColumn'],
         #'Weights': [1, 2, 3, 4],
         'Model Return': 'Testing'#MLAlgo(MLTechnique, Data, TargetColumn),

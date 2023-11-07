@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session, redirect, jsonify
-import jwt
 import requests
 import json
 import pandas as pd
@@ -63,16 +62,11 @@ def Prediction(MLTechnique):
     # Prepare the dataframe for the API call
     df_json = df.to_json(orient='records')
     Data = {
-        'Data' : "Hello World", #df_json,
-        'TargetColumn' :  session['OutputFields'],
-        'MLTechnique' : MLTechnique
+        'MLTechnique': 'MLTechnique',
+        'Data' : df_json,
+        'TargetColumn' :  session['MLOutput']
     }
-    header = {"tpy":"jwt", "alg":"HS256"}
-    secret = "secret"
-    token = jwt.encode(Data, secret, algorithm="HS256", headers=header)
-    print(token)
-    req = requests.get(f"http://127.0.0.1:8080/TrainData/{token}/{df_json}")
-    session['MLOutput'] = req.json()
+    session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData").json()
     return redirect("/mlTrainer")
 
 
@@ -118,17 +112,16 @@ def ChoosingOutputFields(Option):
 
 
 ## Train Data on Models
-@app.route("/TrainData/<Data>/<Dataframe>")
-def DataTrainer(Data, Dataframe):
-    Dictionary = jwt.decode(Data, "secret", algorithms=["HS256"])
+@app.route("/TrainData")
+def DataTrainer(Data):
     data = {
-        'MLTechnique': "MLTechnique",
-        'Target Column': Dictionary['TargetColumn'],
-        #'Weights': [1, 2, 3, 4],
-        'Model Return': 'Testing'#MLAlgo(MLTechnique, Data, TargetColumn),
+        'MLTechnique': 'Random Forest',#Data['MLTechnique'],
+        'Target Column': 'Churn',#Data['TargetColumn'],
+        'Weights': [1, 2, 3, 4],
+        'Model Return': "Hello World"#MLAlgo(MLTechnique, Data, TargetColumn),
     }
-    #print(Data, type(json.loads(Data)))
-    return jsonify(data)
+    print(type(json.dumps(data)))
+    return json.dumps(data)
 
 
 ## Train Data on Models

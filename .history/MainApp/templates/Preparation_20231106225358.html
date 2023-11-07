@@ -26,7 +26,7 @@
         <div class="accordion-item">
             <h2 class="accordion-header" id="flush-headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    Choosing Output Field : {{OutputFields}}
+                    Choosing Output Field
                 </button>
             </h2>
             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
@@ -34,6 +34,7 @@
                     {% for Columns in ChoosingOutputFields %}
                     <a href="/ChoosingOutputFields/{{Columns}}"><button class="btn btn-outline-success mb-3">{{Columns}}</button></a>
                     {% endfor %}
+                    {{OutputFields}}
                 </div>
             </div>
         </div>
@@ -84,16 +85,34 @@
         </div>
     </div>
 </div>
-<div id = "DescriptiveData">
-    {{DescriptiveData}}
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("flush-headingFive").addEventListener("click", function() {
-            var data = document.getElementById("DescriptiveData");
+            var data = {
+                customerID: 50,
+                gender: 30,
+                SeniorCitizen: 20,
+                Partner: 45,
+                Dependents: 35,
+                tenure: 55,
+                PhoneService: 25,
+                MultipleLines: 40,
+                InternetService: 60,
+                OnlineSecurity: 70,
+                OnlineBackup: 45,
+                DeviceProtection: 55,
+                TechSupport: 65,
+                StreamingTV: 30,
+                StreamingMovies: 35,
+                Contract: 50,
+                PaperlessBilling: 70,
+                PaymentMethod: 65,
+                MonthlyCharges: 75,
+                TotalCharges: 85,
+                Churn: 40,
+            };
 
             var labels = Object.keys(data);
             var values = Object.values(data);

@@ -45,12 +45,7 @@ def HomePage():
 def Preparation():
     try:
         df = pd.read_excel('ChurnAnalysis.xlsx')
-        session['DescriptiveData'] = {
-            "1" : 20,
-            "2" : 30,
-            "3" : 50,
-            "4" : 40
-        }
+        session['DescriptiveData'] = Jsonify(df.describe())
         print("Dataframe Read")
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:

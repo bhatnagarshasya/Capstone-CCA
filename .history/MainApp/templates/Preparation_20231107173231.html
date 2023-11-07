@@ -84,16 +84,12 @@
         </div>
     </div>
 </div>
-<div id = "DescriptiveData">
-    {{DescriptiveData}}
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("flush-headingFive").addEventListener("click", function() {
-            var data = document.getElementById("DescriptiveData");
+            var data = {DescriptiveData};
 
             var labels = Object.keys(data);
             var values = Object.values(data);

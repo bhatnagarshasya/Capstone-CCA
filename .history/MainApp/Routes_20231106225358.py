@@ -5,8 +5,6 @@ import pandas as pd
 app = Flask(__name__)
 app.secret_key = "Hello World"
 
-
-
 ## Home Page
 @app.route("/")
 def HomePage():
@@ -45,17 +43,11 @@ def HomePage():
 def Preparation():
     try:
         df = pd.read_excel('ChurnAnalysis.xlsx')
-        session['DescriptiveData'] = {
-            "1" : 20,
-            "2" : 30,
-            "3" : 50,
-            "4" : 40
-        }
         print("Dataframe Read")
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:
         session['ChoosingOutputFields'] = 'Empty'
-    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], )
+    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
@@ -79,7 +71,7 @@ def Prediction():
     # Prepare the dataframe for the API call
     df_json = df.to_json(orient='records')
     session['MLAlgoList'] = requests.get("http://127.0.0.1:8080/ML_Available").json()
-    #session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['OutputFields']}/{df_json}").json()
+    session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['OutputFields']}/{df_json}").json()
     print("Main App")
     print(session['MLTechniques'], session['MLOutput'])
     return render_template('Prediction.html', 

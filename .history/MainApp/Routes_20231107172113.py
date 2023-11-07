@@ -45,17 +45,11 @@ def HomePage():
 def Preparation():
     try:
         df = pd.read_excel('ChurnAnalysis.xlsx')
-        session['DescriptiveData'] = {
-            "1" : 20,
-            "2" : 30,
-            "3" : 50,
-            "4" : 40
-        }
         print("Dataframe Read")
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:
         session['ChoosingOutputFields'] = 'Empty'
-    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], )
+    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
