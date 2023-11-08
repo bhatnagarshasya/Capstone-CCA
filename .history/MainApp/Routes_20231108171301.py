@@ -153,7 +153,6 @@ def Preparation():
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:
         session['ChoosingOutputFields'] = 'Empty'
-    labels = ['']
     return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], )
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
@@ -247,7 +246,7 @@ def trainData(MLAlgo):
 ### Preperation => Data to be plotted
 @app.route("/DataPlot")
 def DataPlot():
-    pass
+    
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

@@ -153,7 +153,6 @@ def Preparation():
         session['ChoosingOutputFields'] = [i for i in df.columns]
     except:
         session['ChoosingOutputFields'] = 'Empty'
-    labels = ['']
     return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], )
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
