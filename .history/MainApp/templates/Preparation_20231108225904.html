@@ -78,17 +78,14 @@
     <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
             <div class="mt-5">
-                <h2>Graph Representation of {{plotData}}</h2>
-                <div class="accordion-body">
-                    {% for Attributes in ListOfAttribute %}
-                    <a href="/PlottingData/{{Attributes}}"><button class="btn btn-outline-success mb-3">{{Attributes}}</button></a>
-                    {% endfor %}
-                    
-                </div>
+                <h2>Graph Representation</h2>
                 <canvas id="myChart" width="10" height="5"></canvas>
             </div>
         </div>
     </div>
+</div>
+<div id = "DescriptiveData">
+    {{DescriptiveData}}
 </div>
 
 
@@ -98,8 +95,8 @@
         document.getElementById("flush-headingFive").addEventListener("click", function() {
             var data = document.getElementById("DescriptiveData");
 
-            var labels = {{labels | safe}};//Object.keys(data);
-            var values = {{values | safe}};//Object.values(data);
+            var labels = {{labels | labels}};//Object.keys(data);
+            var values = {{values | values}};//Object.values(data);
 
             var ctx = document.getElementById('myChart').getContext('2d');
             var myChart = new Chart(ctx, {

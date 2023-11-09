@@ -78,7 +78,7 @@
     <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
             <div class="mt-5">
-                <h2>Graph Representation of {{plotData}}</h2>
+                <h2>Graph Representation</h2>
                 <div class="accordion-body">
                     {% for Attributes in ListOfAttribute %}
                     <a href="/PlottingData/{{Attributes}}"><button class="btn btn-outline-success mb-3">{{Attributes}}</button></a>
@@ -89,6 +89,9 @@
             </div>
         </div>
     </div>
+</div>
+<div id = "DescriptiveData">
+    {{DescriptiveData}}
 </div>
 
 

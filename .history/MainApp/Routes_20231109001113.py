@@ -134,10 +134,7 @@ def HomePage():
         session['MLAlgo'] = "Not Selected"
     ## Particular Attribute Choosen
     if 'Attribute' not in session:
-        session['Attribute'] = "Not Selected"
-    ## Choosing Data to be Plotted
-    if "PlotAttribute" not in session:
-        session["PlotAttribute"] = "Not Selected"
+        session ['Attribute'] = "Not Selected"
     return render_template('HomePage.html')
 
 
@@ -157,26 +154,18 @@ def Preparation():
         ### Data to be ploted
         plotData = dict()
         for columnName in session['ChoosingOutputFields']:
-            labels = [i for i in df[columnName].unique()]
-            values = [len([1 for i in df[columnName] if i == j]) for j in labels]
             plotData[columnName] = {
-                "labels" : labels,
-                "values" : values
+                "labels" : [i for i in df[columnName].unique()],
+                "values" : [len([1 for i in df[columnName] if i == j]) for j in labels]
             }
-        columnName = session["PlotAttribute"]
-        if session["PlotAttribute"] != "Not Selected":
-            labels = [i for i in df[columnName].unique()]
-            values = [len([1 for i in df[columnName] if i == j]) for j in labels]
-        else:
-            labels = []
-            values = []
     except:
         session['ChoosingOutputFields'] = 'Empty'
-        labels = []
-        values = []
+    columnName = 'Partner'
+    labels = [i for i in df[columnName].unique()]
+    values = [len([1 for i in df[columnName] if i == j]) for j in labels]
     
     print(type([i for i in df['Partner'].unique()]))
-    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], labels=labels, values=values, plotData=session["PlotAttribute"], ListOfAttribute=[i for i in session['ChoosingOutputFields']])
+    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], labels=labels, values=values, plotData=plotData)
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
@@ -267,10 +256,9 @@ def trainData(MLAlgo):
     return redirect('/prediction')
 
 ### Preperation => Data to be plotted
-@app.route("/PlottingData/<Attribute>")
-def DataPlot(Attribute):
-    session["PlotAttribute"] = Attribute
-    return redirect('/preparation')
+@app.route("/DataPlot")
+def DataPlot():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)

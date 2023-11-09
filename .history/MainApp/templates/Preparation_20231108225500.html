@@ -78,50 +78,38 @@
     <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
             <div class="mt-5">
-                <h2>Graph Representation of {{plotData}}</h2>
-                <div class="accordion-body">
-                    {% for Attributes in ListOfAttribute %}
-                    <a href="/PlottingData/{{Attributes}}"><button class="btn btn-outline-success mb-3">{{Attributes}}</button></a>
-                    {% endfor %}
-                    
-                </div>
+                <h2>Graph Representation</h2>
                 <canvas id="myChart" width="10" height="5"></canvas>
             </div>
         </div>
     </div>
 </div>
+<div id = "DescriptiveData">
+    {{DescriptiveData}}
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.getElementById("flush-headingFive").addEventListener("click", function() {
-            var data = document.getElementById("DescriptiveData");
+    fetch('/DataPlot')
+    .then(response => response.json())
+    .then(data => {
+        // Extract feature names and importance values
+        const featureNames = data.map(feature => feature.feature);
+        const importanceValues = data.map(feature => feature.importance);
 
-            var labels = {{labels | safe}};//Object.keys(data);
-            var values = {{values | safe}};//Object.values(data);
-
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Data Representation',
-                        data: values,
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+        // Update the chart with the extracted data
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: featureNames,
+                datasets: [{
+                    label: 'Feature Importance',
+                    data: importanceValues,
+                    backgroundColor: ['#36A2EB', '#FFCE56', '#4BC0C0', '#996633']
+                }]
+            }
         });
     });
 </script>

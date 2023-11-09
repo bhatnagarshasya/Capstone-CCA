@@ -176,7 +176,7 @@ def Preparation():
         values = []
     
     print(type([i for i in df['Partner'].unique()]))
-    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], labels=labels, values=values, plotData=session["PlotAttribute"], ListOfAttribute=[i for i in session['ChoosingOutputFields']])
+    return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], labels=labels, values=values, plotData=plotData, ListOfAttribute=[i for i in session['ChoosingOutputFields']])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
 def prepOption(Option):
