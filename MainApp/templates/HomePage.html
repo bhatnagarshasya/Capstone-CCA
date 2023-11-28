@@ -10,59 +10,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customer Churn Prediction App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.18.0/font/bootstrap-icons.css">
 </head>
 
 <body>
+    <!-- Hero Section -->
     <section class="p-5 text-center bg-light">
-        <h1>Welcome to the Customer Churn Prediction App</h1>
-        <p>Empower your business decisions with data-driven insights.</p>
-        <a href="#how-it-works" class="btn btn-primary mt-4">Learn More</a>
+        <h1 class="display-4">Welcome to the Customer Churn Prediction App</h1>
+        <p class="lead">Empower your business decisions with data-driven insights.</p>
+        <a href="#how-it-works" class="btn btn-primary btn-lg mt-4">Learn More</a>
     </section>
 
+    <!-- Features Section -->
     <section id="features" class="p-5">
         <div class="container">
             <div class="row text-center">
                 <div class="col-md-4">
                     <i class="bi bi-bar-chart h1 mb-3"></i>
                     <h3>Data Analysis</h3>
-                    <p>Upload your business performance data and analyze key metrics effortlessly.</p>
+                    <p class="lead">Upload your business performance data and analyze key metrics effortlessly.</p>
                 </div>
                 <div class="col-md-4">
                     <i class="bi bi-pie-chart h1 mb-3"></i>
                     <h3>Graphical Insights</h3>
-                    <p>Visualize your data with descriptive graphs to understand customer behavior.</p>
+                    <p class="lead">Visualize your data with descriptive graphs to understand customer behavior.</p>
                 </div>
                 <div class="col-md-4">
                     <i class="bi bi-lightning h1 mb-3"></i>
                     <h3>Predictive Models</h3>
-                    <p>Utilize advanced algorithms to predict customer churn and make informed decisions.</p>
+                    <p class="lead">Utilize advanced algorithms to predict customer churn and make informed decisions.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- How It Works Section -->
     <section id="how-it-works" class="p-5 bg-light">
         <div class="container">
             <h2 class="text-center mb-5">How It Works</h2>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <i class="bi bi-cloud-upload h1 mb-3"></i>
                     <h3>Upload Data</h3>
                     <p>Upload your business performance data in CSV format securely through our intuitive interface.</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <i class="bi bi-columns h1 mb-3"></i>
                     <h3>Choose Columns</h3>
                     <p>Select the relevant column fields from your data that you want to analyze and visualize.</p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <i class="bi bi-graph-up h1 mb-3"></i>
                     <h3>Select Your Prediction Model</h3>
                     <p>Explore and select from a variety of powerful prediction models tailored to your business needs.</p>
                 </div>
-                <div class="col-md-12 text-center mt-5">
-                    <a href="preparation" class="btn btn-primary">Get Started</a>
+            </div>
+            <div class="row mt-5">
+                <div class="col-md-12 text-center">
+                    <a href="preparation" class="btn btn-primary btn-lg">Get Started</a>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Additional Section: Benefits -->
+    <section id="benefits" class="p-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Key Benefits</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <i class="bi bi-trophy h1 mb-3"></i>
+                    <h3>Improve Customer Retention</h3>
+                    <p>Identify patterns to improve customer satisfaction and retention strategies.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-gear h1 mb-3"></i>
+                    <h3>Optimize Operations</h3>
+                    <p>Optimize your business operations based on data-driven insights and predictions.</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-wallet h1 mb-3"></i>
+                    <h3>Maximize Profits</h3>
+                    <p>Make informed decisions to maximize profits and reduce customer churn impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="p-5 text-center bg-light">
+        <div class="container">
+            <h2 class="display-4 mb-4">Ready to Get Started?</h2>
+            <p class="lead">Join our platform now to revolutionize your approach to customer churn prediction.</p>
+            <a href="signup" class="btn btn-primary btn-lg mt-4">Sign Up Now</a>
+        </div>
+    </section>
+
+    <!-- Additional Section: Testimonials -->
+    <section id="testimonials" class="p-5 bg-secondary text-white">
+        <div class="container">
+            <h2 class="text-center text-white mb-5">What Our Users Say</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"The Customer Churn Prediction App has transformed how we make decisions. It's an invaluable tool for our business."</p>
+                        <footer class="blockquote-footer">John Doe, CEO</footer>
+                    </blockquote>
+                </div>
+                <div class="col-md-6">
+                    <blockquote class="blockquote">
+                        <p class="mb-0">"Predictive models have given us a competitive edge. The accuracy is impressive, and the insights are actionable."</p>
+                        <footer class="blockquote-footer">Jane Smith, CMO</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Section: Contact Us -->
+    <section id="contact" class="p-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Contact Us</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="John Doe">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="john@example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Your Message</label>
+                            <textarea class="form-control" id="message" rows="4" placeholder="Write your message here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+                <div class="col-md-6">
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
