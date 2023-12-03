@@ -175,7 +175,7 @@ def Preparation():
         labels = []
         values = []
     
-    print(type([i for i in df['Partner'].unique()]))
+    #print(type([i for i in df['Partner'].unique()]))
     return render_template('Preparation.html', ChoosingOutputFields=session['ChoosingOutputFields'], DescriptiveData=session['DescriptiveData'], DividingDataFields=session['DividingDataFields'], OutputFields=session['OutputFields'], labels=labels, values=values, plotData=session["PlotAttribute"], ListOfAttribute=[i for i in session['ChoosingOutputFields']])
 
 @app.route("/preparation/<Option>", methods=['GET', 'POST'])
@@ -199,7 +199,7 @@ def Prediction():
     df = pd.read_excel('ChurnAnalysis.xlsx')
     # Prepare the dataframe for the API call
     df_json = df.to_json(orient='records')
-    session['MLAlgoList'] = requests.get("http://127.0.0.1:8080/ML_Available").json()
+    session['MLAlgoList'] = ['Random Forest', 'Linear Regression', 'Logistic Regression', 'SVM']#requests.get("http://127.0.0.1:8080/ML_Available").json()
     #session['MLOutput'] = requests.get(f"http://127.0.0.1:8080/TrainData/{session['OutputFields']}/{df_json}").json()
     print("Main App")
     print(session['MLTechniques'], session['MLOutput'])
@@ -273,4 +273,4 @@ def DataPlot(Attribute):
     return redirect('/preparation')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True, host='0.0.0.0', port=8000)
