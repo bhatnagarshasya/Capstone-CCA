@@ -6,9 +6,3 @@ services:
       context: ./mainapp
     ports:
       - "8000:8000"
-    
-  prediction:
-    build:
-      context: ./prediction
-    ports:
-      - "8080:8080"
