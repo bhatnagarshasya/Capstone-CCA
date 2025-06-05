@@ -7,7 +7,14 @@ from sklearn.inspection import permutation_importance
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import LogisticRegression
 import numpy as np
+import logging
 
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = "Hello World"
@@ -271,6 +278,16 @@ def trainData(MLAlgo):
 def DataPlot(Attribute):
     session["PlotAttribute"] = Attribute
     return redirect('/preparation')
+
+@app.route("/health")
+def health_check():
+    """Health check endpoint for Kubernetes probes"""
+    try:
+        # Add any additional health checks here
+        return {"status": "healthy"}, 200
+    except Exception as e:
+        logger.error(f"Health check failed: {str(e)}")
+        return {"status": "unhealthy", "error": str(e)}, 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
