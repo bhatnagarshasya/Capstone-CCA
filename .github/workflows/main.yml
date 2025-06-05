@@ -43,11 +43,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          registry: docker.io
+          
+      - name: Set Docker tag
+        run: echo "DOCKER_TAG=churn-analysis:latest" >> $GITHUB_ENV
           
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: ./MainApp
           push: true
-          tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/churn-analysis:latest 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_TAG }} 
