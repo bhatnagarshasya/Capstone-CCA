@@ -41,7 +41,7 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: bhatnagarshasya2002
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
       - name: Build and push
@@ -49,4 +49,4 @@ jobs:
         with:
           context: ./MainApp
           push: true
-          tags: bhatnagarshasya2002/churn-analysis:latest 
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/churn-analysis:latest 
