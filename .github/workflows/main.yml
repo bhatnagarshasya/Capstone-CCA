@@ -41,15 +41,12 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: bhatnagarshasya2002
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          
-      - name: Set Docker tag
-        run: echo "DOCKER_TAG=churn-analysis:latest" >> $GITHUB_ENV
           
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: ./MainApp
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.DOCKER_TAG }} 
+          tags: bhatnagarshasya2002/churn-analysis:latest 
