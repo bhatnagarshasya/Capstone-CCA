@@ -50,4 +50,4 @@ jobs:
         with:
           context: ./MainApp
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/churn-analysis:latest 
+          tags: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/churn-analysis:latest 
